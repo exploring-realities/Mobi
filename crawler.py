@@ -15,7 +15,7 @@ def select_form_by_name(name):
 
 
 # Returns informations regarding the time of departures of a requested station.
-def request_station_info(station, on, at):
+def request_station_info(station, at, on):
     br = mechanize.Browser()
     br.open('http://www.hvv.de/fahrplaene/abfahrten/index.php')
     br.select_form(name="departure-listing-form")

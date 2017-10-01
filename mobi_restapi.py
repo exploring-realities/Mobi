@@ -14,7 +14,9 @@ def get_testing():
     json = request.json
     output = {}
     if "station" in json.keys() and "on" in json.keys() and "at" in json.keys():
-        return jsonify(crawler.request_station_info(json["station"], json["on"], json["at"]))
+        return jsonify(crawler.request_station_info(json["station"],
+                                                    json["at"],
+                                                    json["on"]))
     else:
         return jsonify({"error": "data object must contain 'station', 'on', and 'start'."})
 
