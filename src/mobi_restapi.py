@@ -11,7 +11,7 @@ import crawler
 app = Flask(__name__)
 
 
-@app.route('/fahrplaene/abfahrten', methods=['POST'])
+@app.route('/api/fahrplaene/abfahrten', methods=['POST'])
 def get_testing():
     json = request.json
     output = {}

@@ -1,1 +1,1 @@
-curl -H Content-Type: application/json -X POST -d '{station:Hammerbrook,on:20:48, at:01.10.2017}' http://localhost:6425/fahrplaene/abfahrten
+curl -H "Content-Type: application/json" -X POST -d '{"station":"Hamburger Strasse","at":"00:23", "on":"2.10.2017"}' http://vingu.online:6425/fahrplaene/abfahrten
