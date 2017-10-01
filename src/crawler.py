@@ -22,13 +22,13 @@ def request_station_info(station, at, on):
 
     # Make form request.
     br.form["station"] = station
-    br.form["on"] = on
     br.form["at"] = at
+    br.form["on"] = on
 
-    # response_html_str = br.submit().read()
-    # save_string_to_file(response_html_str, 'response_html.html')
+    response_html_str = br.submit().read()
+    # response_html_str = get_string_of_file('response_html_timeout.html')
+    # save_string_to_file(response_html_str, 'response_html_timeout.html')
 
-    response_html_str = get_string_of_file('response_html.html')
     tree = html.fromstring(response_html_str)
     stations_unfiltered = tree.cssselect(".standard.departures-listing td")
     station_filtered = []
@@ -41,8 +41,20 @@ def request_station_info(station, at, on):
     output = {"departure-times": []}
     for station, time in zip(stations, etas):
         output["departure-times"].append({"station": station, "departure-time": time})
-    print output
+
+    if output["departure-times"] == []:
+        error_header = tree.cssselect("h2.error")[0]
+        output.update({"error": error_header.text})
+
     return output
+
+
+def request_route_info(current, target):
+    br = mechanize.Browser()
+    br.set_handle_robots(False)
+    br.open('http://geofox.hvv.de/jsf/home.seam?clear=true&language=de')
+    br.select_form(name="personalSearch")
+    print br.form
 
 
 def save_string_to_file(string, filename):
@@ -55,11 +67,4 @@ def get_string_of_file(filename):
         return file.read()
 
 
-if __name__ == "__main__":
-    filename = ""
-    now = datetime.datetime.now()
-    on = str(now.day) + "." + str(now.month) + "." + str(now.year)
-    at = str(now.hour) + ":" + str(now.minute)
-    response_json = request_station_info("Hallerstrasse", on, at)
-    # response_json =
-    print json.dumps(response_json, sort_keys=True, indent=4, separators=(',', ': '))
+# request_route_info(1, 2)

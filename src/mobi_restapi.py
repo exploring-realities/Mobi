@@ -8,6 +8,8 @@ from flask_pymongo import PyMongo
 from pymongo import MongoClient
 import crawler
 
+app = Flask(__name__)
+
 
 @app.route('/fahrplaene/abfahrten', methods=['POST'])
 def get_testing():
@@ -22,6 +24,5 @@ def get_testing():
 
 
 if __name__ == '__main__':
-    app = Flask(__name__)
     api = Api(app)
     app.run(host='0.0.0.0', port='6425')
